@@ -1,0 +1,1003 @@
+---
+swagger: "2.0"
+info:
+  version: "0.1"
+  title: SDT Order
+host: virtserver.swaggerhub.com
+basePath: /Inmarsat/SDT/0.1
+schemes:
+- https
+consumes:
+- application/json
+- application/xml
+produces:
+- application/json
+paths:
+  /productOrder:
+    post:
+      tags:
+      - order
+      summary: submit a product order
+      description: ""
+      operationId: createOrder
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: order
+        description: the order configuration
+        required: true
+        schema:
+          $ref: '#/definitions/productOrder'
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+  /productOrder/{id}:
+    get:
+      tags:
+      - order
+      summary: returns an order
+      description: ""
+      operationId: getOrder
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the order id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Complete
+          schema:
+            $ref: '#/definitions/productOrder'
+          responseSchema:
+            $ref: '#/definitions/productOrder'
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+    post:
+      tags:
+      - order
+      summary: modifies an installed product
+      description: ""
+      operationId: modifySubscription
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the id of the order
+        required: true
+        type: integer
+      - in: body
+        name: order
+        description: the order configuration
+        required: true
+        schema:
+          $ref: '#/definitions/installedProducts'
+      responses:
+        200:
+          description: Complete
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+    put:
+      tags:
+      - order
+      summary: modifies a product order
+      description: ""
+      operationId: modifyOrder
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the id of the order
+        required: true
+        type: integer
+      - in: body
+        name: order
+        description: the order configuration
+        required: true
+        schema:
+          $ref: '#/definitions/productOrder'
+      responses:
+        200:
+          description: Complete
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+    delete:
+      tags:
+      - order
+      summary: cancels product order
+      description: ""
+      operationId: deleteOrder
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the id of the order
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Complete
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+  /productOrder/byCustomer/{id}:
+    get:
+      tags:
+      - order
+      summary: returns a list of product orders by customer id
+      description: ""
+      operationId: getOrderByCustomer
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the id of the customer
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Complete
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/productOrder'
+          responseSchema:
+            type: array
+            items:
+              $ref: '#/definitions/productOrder'
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+  /productOrder/byName/{productName}:
+    get:
+      tags:
+      - order
+      summary: returns a list of product orders by product name
+      description: ""
+      operationId: getOrderByName
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: productName
+        in: path
+        description: the name of the product
+        required: true
+        type: string
+      responses:
+        200:
+          description: Complete
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/productOrder'
+          responseSchema:
+            type: array
+            items:
+              $ref: '#/definitions/productOrder'
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+  /productOrder/{id}/status:
+    get:
+      tags:
+      - order
+      summary: returns the status of a product order
+      description: ""
+      operationId: orderStatus
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the id of the order
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Complete
+          schema:
+            $ref: '#/definitions/productOrderStatus'
+          responseSchema:
+            $ref: '#/definitions/productOrderStatus'
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+  /productOrder/{id}/action:
+    get:
+      tags:
+      - order
+      summary: gets a list of possible actions on a product Order
+      description: ""
+      operationId: getProductOrderActions
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the product id
+        required: true
+        type: integer
+      - name: actionName
+        in: path
+        description: the action to be taken
+        required: true
+        type: string
+      responses:
+        200:
+          description: Complete
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+  /product/{id}:
+    get:
+      tags:
+      - product
+      summary: gets the product offering structure model
+      description: ""
+      operationId: getProduct
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the product id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Complete
+          schema:
+            $ref: '#/definitions/product'
+          responseSchema:
+            $ref: '#/definitions/product'
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+  /productOrder/orderConfiguration:
+    post:
+      tags:
+      - order
+      summary: submit a product order based on an order configuration
+      description: ""
+      operationId: createProductOrderConfiguration
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: order
+        description: the order configuration
+        required: true
+        schema:
+          $ref: '#/definitions/productOrder'
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+  /orderConfiguration:
+    post:
+      tags:
+      - order
+      summary: creates an order configuration
+      description: ""
+      operationId: createOrderConfiguration
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: order
+        description: the order configuration
+        required: true
+        schema:
+          $ref: '#/definitions/productOrder'
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+  /orderConfiguration/{id}:
+    get:
+      tags:
+      - order
+      summary: returns an order configuration
+      description: ""
+      operationId: getOrderConfiguration
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the order configuration id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Complete
+          schema:
+            $ref: '#/definitions/productOrder'
+          responseSchema:
+            $ref: '#/definitions/productOrder'
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+    put:
+      tags:
+      - order
+      summary: modify a product order configuration
+      description: ""
+      operationId: modifyOrderConfiguration
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the id of the order
+        required: true
+        type: integer
+      - in: body
+        name: order
+        description: the order configuration
+        required: true
+        schema:
+          $ref: '#/definitions/productOrder'
+      responses:
+        200:
+          description: Complete
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+    delete:
+      tags:
+      - order
+      summary: deletes a product order configuration
+      description: ""
+      operationId: deleteOrderConfiguration
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the id of the order
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Complete
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+  /orderConfiguration/{id}/status:
+    get:
+      tags:
+      - order
+      summary: returns an order configuration status
+      description: ""
+      operationId: getOrderConfigurationStatus
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the product id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Complete
+          schema:
+            $ref: '#/definitions/status'
+          responseSchema:
+            $ref: '#/definitions/status'
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+  /orderConfiguration/{id}/action/{actionName}:
+    post:
+      tags:
+      - order
+      summary: performs an action on an order configuration
+      description: ""
+      operationId: orderConfigurationAction
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the product id
+        required: true
+        type: integer
+      - name: actionName
+        in: path
+        description: the action to be taken on the rder configuration
+        required: true
+        type: string
+      - in: body
+        name: order
+        description: the order configuration
+        required: true
+        schema:
+          $ref: '#/definitions/productOrder'
+      responses:
+        201:
+          description: Complete
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+  /orderConfiguration/{id}/template:
+    post:
+      tags:
+      - order
+      summary: creates an order configuration template
+      description: ""
+      operationId: createOrderConfigurationTemplate
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the product id
+        required: true
+        type: integer
+      - in: body
+        name: order
+        description: the order configuration
+        required: true
+        schema:
+          $ref: '#/definitions/productOrder'
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+  /installedProduct/{id}:
+    get:
+      tags:
+      - installedProduct
+      summary: gets the installed product offering structure model
+      description: ""
+      operationId: getInstalledProduct
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the installedProduct id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Complete
+          schema:
+            $ref: '#/definitions/installedProducts'
+          responseSchema:
+            $ref: '#/definitions/installedProducts'
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+  /installedProduct/{id}/query/{queryName}:
+    get:
+      tags:
+      - installedProduct
+      summary: returns an installedProduct using a given query
+      description: ""
+      operationId: getinstalledProductQuery
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the installedProduct id
+        required: true
+        type: integer
+      - name: queryName
+        in: path
+        description: the field being queried on
+        required: true
+        type: string
+      responses:
+        200:
+          description: Complete
+          schema:
+            $ref: '#/definitions/installedProducts'
+          responseSchema:
+            $ref: '#/definitions/installedProducts'
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+  /installedProduct/{id}/generateOrderConfiguration:
+    get:
+      tags:
+      - installedProduct
+      summary: generates an order configuration based on an installed product
+      description: ""
+      operationId: generateOrderConfiguration
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the installedProduct id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Complete
+          schema:
+            $ref: '#/definitions/productOrder'
+          responseSchema:
+            $ref: '#/definitions/productOrder'
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+  /device/{id}:
+    get:
+      tags:
+      - device
+      summary: returns the device infromation
+      description: ""
+      operationId: getDevice
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the id of the device
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Complete
+          schema:
+            $ref: '#/definitions/device'
+          responseSchema:
+            $ref: '#/definitions/device'
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+  /device/{id}/status:
+    get:
+      tags:
+      - device
+      summary: returns the status of a device
+      description: ""
+      operationId: deviceStatus
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the id of the device
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Complete
+          schema:
+            $ref: '#/definitions/status'
+          responseSchema:
+            $ref: '#/definitions/status'
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+  /device/{id}/action:
+    get:
+      tags:
+      - device
+      summary: gets a list of possible actions on the device
+      description: ""
+      operationId: deviceActions
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the device id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Complete
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+    post:
+      tags:
+      - device
+      summary: submits an action on a device
+      description: ""
+      operationId: createDeviceAction
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the device id
+        required: true
+        type: integer
+      - in: body
+        name: action
+        description: the device action
+        required: true
+        schema:
+          $ref: '#/definitions/actionItem'
+      responses:
+        200:
+          description: Complete
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+          responseSchema:
+            $ref: '#/definitions/error'
+definitions:
+  productOrder:
+    type: object
+    required:
+    - '@type'
+    - billingAccountRef
+    - orderItem
+    - pricingScheduleRef
+    - siteId
+    properties:
+      '@type':
+        type: string
+      priority:
+        type: string
+        enum:
+        - "0"
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+      contractId:
+        type: string
+      siteId:
+        type: string
+      externalOrderId:
+        type: string
+      externalProjectId:
+        type: string
+      pricingScheduleRef:
+        type: string
+      billingAccountRef:
+        type: string
+      orderItem:
+        $ref: '#/definitions/orderItem'
+    example:
+      billingAccountRef: billingAccountRef
+      orderItem: ""
+      '@type': '@type'
+      externalProjectId: externalProjectId
+      contractId: contractId
+      siteId: siteId
+      externalOrderId: externalOrderId
+      priority: "0"
+      pricingScheduleRef: pricingScheduleRef
+  productOrderStatus:
+    type: object
+    required:
+    - '@type'
+    - orderItem
+    properties:
+      '@type':
+        type: string
+      orderItem:
+        $ref: '#/definitions/orderItem'
+    example:
+      orderItem: ""
+      '@type': '@type'
+  orderItem:
+    type: array
+    items:
+      $ref: '#/definitions/orderItem_inner'
+  product:
+    type: object
+    required:
+    - '@type'
+    - id
+    properties:
+      id:
+        type: string
+      '@type':
+        type: string
+      product:
+        $ref: '#/definitions/product'
+      characteristic:
+        $ref: '#/definitions/characteristic'
+    example:
+      product: null
+      '@type': '@type'
+      id: id
+      characteristic: ""
+  installedProducts:
+    type: object
+    properties:
+      '@type':
+        type: string
+      contractId:
+        type: string
+      siteId:
+        type: string
+      externalOrderId:
+        type: string
+      externalProjectId:
+        type: string
+      pricingScheduleRef:
+        type: string
+      billingAccountRef:
+        type: string
+      installedDate:
+        type: string
+        format: date
+      status:
+        $ref: '#/definitions/status'
+      subStatus:
+        $ref: '#/definitions/status'
+      product:
+        $ref: '#/definitions/installedProduct'
+    example:
+      billingAccountRef: billingAccountRef
+      product: ""
+      '@type': '@type'
+      externalProjectId: externalProjectId
+      installedDate: 2000-01-23
+      contractId: contractId
+      siteId: siteId
+      externalOrderId: externalOrderId
+      pricingScheduleRef: pricingScheduleRef
+      subStatus:
+        date: 2000-01-23
+        name: name
+        error:
+          errorCode: errorCode
+          description: description
+      status:
+        date: 2000-01-23
+        name: name
+        error:
+          errorCode: errorCode
+          description: description
+  installedProduct:
+    type: array
+    items:
+      $ref: '#/definitions/installedProduct_inner'
+  characteristic:
+    type: array
+    items:
+      $ref: '#/definitions/characteristic_inner'
+  status:
+    type: object
+    required:
+    - date
+    - name
+    properties:
+      name:
+        type: string
+      date:
+        type: string
+        format: date
+      error:
+        $ref: '#/definitions/error'
+    example:
+      date: 2000-01-23
+      name: name
+      error:
+        errorCode: errorCode
+        description: description
+  actionItem:
+    type: object
+    properties:
+      device:
+        $ref: '#/definitions/device'
+      action:
+        type: string
+      requestedStartDate:
+        type: string
+        format: date
+      characteristic:
+        $ref: '#/definitions/characteristic'
+  device:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      characteristic:
+        $ref: '#/definitions/characteristic'
+    example:
+      name: name
+      id: id
+      characteristic: ""
+  error:
+    type: object
+    properties:
+      errorCode:
+        type: string
+      description:
+        type: string
+    example:
+      errorCode: errorCode
+      description: description
+  orderItem_inner:
+    required:
+    - '@type'
+    - action
+    - product
+    properties:
+      '@type':
+        type: string
+      action:
+        type: string
+        enum:
+        - add
+        - modify
+        - no_change
+        - delete
+      requestedStartDate:
+        type: string
+        format: date
+      product:
+        $ref: '#/definitions/product'
+      status:
+        $ref: '#/definitions/status'
+      orderItem:
+        $ref: '#/definitions/orderItem'
+  installedProduct_inner:
+    properties:
+      '@type':
+        type: string
+      id:
+        type: string
+      characteristic:
+        $ref: '#/definitions/characteristic'
+      product:
+        $ref: '#/definitions/installedProducts'
+  characteristic_inner:
+    required:
+    - name
+    properties:
+      name:
+        type: string
+      value:
+        type: string
