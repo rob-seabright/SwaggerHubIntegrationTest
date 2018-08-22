@@ -13,6 +13,32 @@ produces:
 - application/json
 paths:
   /productOrder:
+    get:
+      tags:
+      - order
+      summary: returns a list of orders
+      description: ""
+      operationId: getOrders
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: the order id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Complete
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductOrder'
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
     post:
       tags:
       - order
